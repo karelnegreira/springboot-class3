@@ -24,9 +24,38 @@ class OrdersController {
 
     @PostMapping
     void create(@RequestBody Order order) {
-
+        var saved = this.repository.save(order);
+        System.out.println("Saved [ "  + saved + " ]");
     }
 }
+//features of java 21, object oriented
+//sealed classes
+//records
+// matching patterns
+//smart switch expressions
+
+sealed interface Loan permits SecuredLoan, UnsecuredLoan {}
+
+class Loans {
+    String DisplayessageFor(Loan loan) {
+        var message = "";
+        if (loan instanceof SecuredLoan) {
+            var sl = (SecuredLoan) loan;
+            message = "Congrats you got the loan";
+        }
+        if (loan instanceof UnsecuredLoan) {
+            var usl = (UnsecuredLoan) loan;
+            message = "The interest " + usl.interest() + " % is high";
+        }
+
+        return message;
+    }
+}
+
+final class SecuredLoan implements Loan { }
+
+//records are tuples
+ record UnsecuredLoan(float interest) implements Loan { }
 
 
 interface OrderRepository extends ListCrudRepository<Order, Integer> { }
