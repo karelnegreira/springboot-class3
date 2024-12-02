@@ -38,6 +38,16 @@ sealed interface Loan permits SecuredLoan, UnsecuredLoan {}
 
 class Loans {
     String DisplayessageFor(Loan loan) {
+
+        var message = switch (loan) {
+            case UnsecuredLoan(var interest) -> "The interest " + interest + " % is high";
+            case SecuredLoan sl -> "Congrats you got the loan";
+        };
+
+        return message;
+
+        /*
+        old fashioned casting structure
         var message = "";
         if (loan instanceof SecuredLoan) {
             var sl = (SecuredLoan) loan;
@@ -49,6 +59,8 @@ class Loans {
         }
 
         return message;
+
+         */
     }
 }
 
